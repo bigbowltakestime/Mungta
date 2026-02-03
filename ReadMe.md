@@ -1,301 +1,8 @@
-# Mungta (멍타) - Dog Walking Social Platform
-
-<p align="center">
-  <img src="./resource/MainLogo.png" alt="Mungta Logo" width="200"/>
-</p>
-
-<p align="center">
-  <b>🐕 A social platform for dog owners to record, share, and connect through dog walking 🐕</b>
-</p>
-
-<p align="center">
-  <a href="#english">English</a> | <a href="#korean">한국어</a>
-</p>
-
----
-
-<div id="english">
-
-## 📋 Table of Contents (English)
-- [Project Overview](#project-overview)
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Architecture](#architecture)
-- [Installation](#installation)
-- [Team Members](#team-members)
-- [What I Did (bigbowltakestime)](#what-i-did)
-- [Screenshots](#screenshots)
-
-## 🎯 Project Overview
-
-**Mungta (멍타)** is a web application designed for dog owners to:
-- 🗺️ **Record and visualize** dog walking routes on an interactive map
-- 🤝 **Connect with other dog owners** and make friends for their dogs
-- 📊 **Manage walking records** with data visualization and calendar integration
-- 🛒 **Trade second-hand pet items** through a marketplace
-- 💬 **Chat** with other owners via 1:1 and group chat rooms
-- 📸 **Share moments** through a social feed (Instagram-like feature for dogs)
-
-### Project Goal
-> Create an application that records dog walks, shares those records, helps dogs make friends, and manages walking data efficiently.
-
-## ✨ Features
-
-### Map Features (DangMap / 댕맵)
-1. **Display walking routes** on map with custom markers
-2. **Daily marker limit** - Restrict number of markers per day
-3. **View other users' routes** - See where other dogs are walking
-4. **User identification** - See who marked on the map
-5. **Marker clustering** - Group dense marker areas for better visualization
-6. **Weather API integration** - Display current weather information
-7. **Profile preview** - Click markers to see user profiles
-8. **Auto group chat creation** - Create chat rooms for popular walking spots
-
-### Social Features (Dangstar / 댕스타)
-9. **Social feed** - Post photos and updates (Instagram-like)
-10. **Comments** - Write, edit, and delete comments on posts
-11. **Likes** - Like posts and receive notifications
-12. **Second-hand marketplace** (DangMarket / 댕댕마켓) - Buy/sell pet items with image upload
-
-### Communication Features (DangTalk / 댕톡)
-13. **1:1 Private chat** - Direct messaging between users
-14. **Group chat** - Public chat rooms for popular walking areas
-15. **Real-time messaging** - Instant message delivery via Socket.io
-
-### User Features
-16. **Calendar integration** - Auto-mark walking days on calendar
-17. **My posts & comments** - View all your activity history
-18. **Notifications** - Get alerts for chats, follows, and likes
-19. **Follow system** - Follow other users and their walking routes
-20. **Temperature system** - User reputation/reliability scoring
-21. **Authentication** - JWT-based secure login/logout
-
-## 🛠 Tech Stack
-
-### Frontend
-- **Vanilla JavaScript (ES6+)** - No frameworks, pure JavaScript
-- **Kakao Map API** - Map visualization and geolocation
-- **Weather API** - Real-time weather data
-
-### Backend
-- **Node.js** - Runtime environment
-- **Native HTTP Module** - Custom server implementation (no Express)
-- **Socket.io** - Real-time bidirectional communication
-- **JWT (JSON Web Tokens)** - Authentication & authorization
-- **busboy** - File upload handling
-- **multer** - Alternative file upload support
-
-### Database
-- **MySQL** - Relational database
-- **Connection pooling** - Efficient database connections
-
-### Development Tools
-- **ES Modules** - Modern JavaScript module system
-- **Git** - Version control
-
-## 🏗 Architecture
-
-### Project Structure
-```
-Mungta/
-├── app.js                      # Main server entry point (Port 2080)
-├── package.json                # Dependencies and scripts
-├── mungta.sql                  # Complete database schema
-│
-├── backEnd/                    # Backend modules
-│   ├── Router/                 # API route handlers
-│   │   ├── home/               # Home page routes
-│   │   ├── login/              # Authentication (JWT)
-│   │   ├── Map/                # DangMap functionality
-│   │   ├── PostBoard/          # Dangstar & DangMarket
-│   │   ├── chat/               # DangTalk messaging
-│   │   ├── profile/            # User profiles
-│   │   ├── social/             # Friend system
-│   │   └── alarm/              # Notifications
-│   ├── module/                 # Utility modules
-│   │   ├── dangtalkSocketIo.js # Chat socket handler
-│   │   ├── imageUpload.js      # Image processing
-│   │   ├── jsonWebToken.js     # JWT utilities
-│   │   └── followSearch.js     # Follow system
-│   └── fileReader/             # Static file serving
-│
-├── frontEnd/                   # Frontend JavaScript
-│   ├── Home/                   # Home page & weather
-│   ├── dangMap/                # Map interaction
-│   ├── dangtalk/               # Chat interface
-│   ├── postBoard/              # Social feed UI
-│   ├── profile/                # Profile pages
-│   ├── dangfriends/            # Friend list
-│   └── login/                  # Auth pages
-│
-├── common/                     # Shared components
-│   ├── htmlBox.js              # HTML templates
-│   ├── topMenu.js              # Navigation
-│   ├── bottomMenu.js           # Footer navigation
-│   └── commonStyle.js          # Shared styles
-│
-├── graphic/                    # Weather icons & graphics
-├── image/                      # User uploaded images
-├── resource/                   # Static resources
-└── friends/                    # Friend page components
-```
-
-### Database Schema
-
-#### Core Tables
-- **`userinfo`** - User accounts (id, password, dog info, security questions)
-- **`map_tables`** - Walking markers (latitude, longitude, timestamp, user_id)
-- **`dangstar`** - Social posts (content, images, likes, timestamps)
-- **`dangmarket`** - Marketplace listings
-
-#### Social Tables
-- **`dangstar_comment`** - Post comments
-- **`dangstar_like`** - Post likes
-- **`fr_list`** - Friend/follow relationships
-- **`star_check`** - Favorite/starred markers
-
-#### Communication Tables
-- **`chat_room`** - Chat room memberships
-- **`chat_text`** - Chat messages
-- **`alarm`** - Notifications (likes, follows, comments, chat invites)
-
-#### User Data Tables
-- **`temperature`** - User reputation scores
-
-## 🚀 Installation
-
-### Prerequisites
-- Node.js (v14 or higher)
-- MySQL (v8.0 or higher)
-- npm or yarn
-
-### Step 1: Clone the Repository
-```bash
-git clone https://github.com/kongukjae/KDT-2-Project-C-3.git
-cd KDT-2-Project-C-3
-```
-
-### Step 2: Install Dependencies
-```bash
-npm install
-```
-
-### Step 3: Database Setup
-1. Start MySQL server
-2. Create database:
-```sql
-CREATE DATABASE mungta;
-```
-3. Import schema:
-```bash
-mysql -u root -p mungta < mungta.sql
-```
-
-### Step 4: Configure Database Connection
-Edit `backEnd/commonServer.js` or database configuration files:
-```javascript
-const mysqlInfo = {
-  host: "localhost",  // or "192.168.100.63" for server
-  user: "guest",
-  password: "0000",
-  database: "mungta"
-};
-```
-
-### Step 5: Start the Server
-```bash
-node app.js
-```
-
-Server will run on `http://localhost:2080`
-
-### Step 6: Access the Application
-Open your browser and navigate to:
-```
-http://localhost:2080
-```
-
-## 👥 Team Members
-
-| Role | Name | GitHub |
-|------|------|--------|
-| **Team Leader** | 류은이 (Ryu Euni) | - |
-| **Backend Developer** | 김종윤 (Kim Jongyoon) | kimjongyoon96 |
-| **Frontend Developer** | 김지섭 (Kim Jiseop) | JseopKim |
-| **Full-stack Developer** | 김형진 (Kim Hyungjin) | bigbowltakestime |
-| **Backend Developer** | 노수민 (No Sumin) | - |
-
-**Team Name**: C3 IZ*ONE (KDT 2nd Generation Project)
-
-## 🏆 What I Did (bigbowltakestime)
-
-As **Kim Hyungjin (김형진)** with GitHub ID **bigbowltakestime**, I contributed extensively to the Mungta project with over **247+ commits** across the development period.
-
-### Key Contributions
-
-#### 🗄️ Database Management
-- Designed and optimized the **MySQL database schema** (`mungta.sql`)
-- Implemented efficient queries for map marker retrieval
-- Managed database connections and query optimization
-- Created complex JOIN queries for friend-based marker filtering
-
-#### 🗺️ DangMap (Map Feature) Backend
-- Developed **map data API endpoints** (`dangmap_read_get.js`)
-- Implemented marker categorization:
-  - **My Markers** (`/loadMap`) - User's own walking routes
-  - **Starred/Favorite Markers** (`/starFootprint`) - Followed users with star
-  - **Friend Markers** (`/frFootprint`) - Regular friends' routes
-  - **Other Users** (`/otFootprint`) - Public routes from non-friends
-- Created calendar-based marker loading (`/allloadMap`)
-- Implemented marker clustering logic
-
-#### 📱 Dangstar (Social Feed) Backend
-- Built **social feed API** (`dangstarGet.js`)
-- Implemented **infinite scroll pagination** with `limit` and `offset`
-- Created post loading with chronological ordering
-
-#### 💬 Chat System
-- Developed **public chat room generation** system (`dangmapPublicChatGenerator.js`)
-- Implemented location-based chat room creation
-- Created chat list management and participant tracking
-
-#### 👥 Social Features
-- Implemented **follow system** (`followSearch.js`)
-- Created friend relationship management
-- Developed user search functionality
-
-#### 🖼️ Image Handling
-- Built **image upload module** (`imageUpload.js`)
-- Implemented file processing with busboy
-- Created image storage and retrieval system
-
-#### 🔧 Infrastructure & DevOps
-- **Server deployment** configuration and management
-- **Code cleanup** and refactoring for maintainability
-- **Bug fixes** across multiple modules
-- **Merge request management** (30+ PRs reviewed and merged)
-
-### Technical Skills Demonstrated
-- **Backend Architecture**: RESTful API design with native Node.js HTTP module
-- **Database Design**: Complex SQL queries, indexing, relationship management
-- **Real-time Communication**: Socket.io integration for chat features
-- **File Processing**: Image upload handling and storage
-- **Version Control**: Git workflow management, conflict resolution
-- **Code Quality**: Refactoring, optimization, documentation
-
-### Notable Issues Resolved
-- Issue #188 - Various feature implementations
-- Issue #273 - Bug fixes and optimizations
-- Issue #305 - Database and server improvements
-- Issue #315 - Server deployment configuration
-
----
-
-</div>
 
 <div id="korean">
 
 ## 📋 목차 (한국어)
+- [스크린샷](#스크린샷)
 - [프로젝트 개요](#프로젝트-개요)
 - [주요 기능](#주요-기능)
 - [기술 스택](#기술-스택)
@@ -303,7 +10,36 @@ As **Kim Hyungjin (김형진)** with GitHub ID **bigbowltakestime**, I contribut
 - [설치 방법](#설치-방법)
 - [팀원 소개](#팀원-소개)
 - [내가 한 일 (bigbowltakestime)](#내가-한-일)
-- [스크린샷](#스크린샷)
+
+---
+
+## 📸 Screenshots
+
+<div align="center">
+
+### Login & Home
+<img src="https://user-images.githubusercontent.com/117888227/227817898-a9a53503-9931-4b02-bd13-4b594eed3315.png" height="350">
+<img src="https://user-images.githubusercontent.com/117888227/227817906-d499a4b7-d7ae-4ed0-982c-594fcd1a5e8f.png" height="350">
+
+### Map Features
+<img src="https://user-images.githubusercontent.com/117888227/236104178-ff9a14fd-85c8-4a6b-9988-968b837582e0.png" height="350">
+<img src="https://user-images.githubusercontent.com/117888227/236104183-fe42a85f-8df9-44a7-af18-c7da9eb44bdf.png" height="350">
+
+### Social Feed & Chat
+<img src="https://user-images.githubusercontent.com/117888227/236104240-ffdcbfd5-22f3-45fc-a3c5-3ec3935f7892.png" height="350">
+<img src="https://user-images.githubusercontent.com/117888227/236104253-bbe71c4b-aca8-44ac-b097-be212b1f0e03.png" height="350">
+
+### Profile & Marketplace
+<img src="https://github.com/kongukjae/KDT-2-Project-C-3/assets/117888227/e41b2a51-8333-4b38-9b6a-e714a057b220.png" height="350">
+<img src="https://github.com/kongukjae/KDT-2-Project-C-3/assets/117888227/e07a2b2f-3ed0-45d3-9709-4b2f65f3ee07.png" height="350">
+
+### Additional Features
+<img src="https://user-images.githubusercontent.com/117888227/236104335-5118876f-c60d-407c-acbd-7657f633a570.png" height="350">
+<img src="https://user-images.githubusercontent.com/117888227/236104339-03391004-cba5-4298-9ecd-2bcac74ffb04.png" height="350">
+
+</div>
+
+
 
 ## 🎯 프로젝트 개요
 
@@ -314,6 +50,8 @@ As **Kim Hyungjin (김형진)** with GitHub ID **bigbowltakestime**, I contribut
 - 🛒 **중고 거래** - 반려동물 용품 거래 마켓플레이스
 - 💬 **채팅 기능** - 1:1 및 단체 채팅방
 - 📸 **순간 공유** - 인스타그램 스타일의 소셜 피드
+
+[발표자료 링크](https://docs.google.com/presentation/d/1j60ksSb-JWPuQebR1ArQMnokCbwM-kROd0F8q6jXqsE/edit?usp=sharing)
 
 ### 프로젝트 목표
 > 강아지의 산책을 기록하고, 그 기록을 공유하며 강아지의 친구를 만들어주고, 산책 기록을 데이터화하여 관리할 수 있는 어플리케이션 제작
@@ -570,33 +308,6 @@ http://localhost:2080
 
 </div>
 
----
-
-## 📸 Screenshots
-
-<div align="center">
-
-### Login & Home
-<img src="https://user-images.githubusercontent.com/117888227/227817898-a9a53503-9931-4b02-bd13-4b594eed3315.png" height="350">
-<img src="https://user-images.githubusercontent.com/117888227/227817906-d499a4b7-d7ae-4ed0-982c-594fcd1a5e8f.png" height="350">
-
-### Map Features
-<img src="https://user-images.githubusercontent.com/117888227/236104178-ff9a14fd-85c8-4a6b-9988-968b837582e0.png" height="350">
-<img src="https://user-images.githubusercontent.com/117888227/236104183-fe42a85f-8df9-44a7-af18-c7da9eb44bdf.png" height="350">
-
-### Social Feed & Chat
-<img src="https://user-images.githubusercontent.com/117888227/236104240-ffdcbfd5-22f3-45fc-a3c5-3ec3935f7892.png" height="350">
-<img src="https://user-images.githubusercontent.com/117888227/236104253-bbe71c4b-aca8-44ac-b097-be212b1f0e03.png" height="350">
-
-### Profile & Marketplace
-<img src="https://github.com/kongukjae/KDT-2-Project-C-3/assets/117888227/e41b2a51-8333-4b38-9b6a-e714a057b220.png" height="350">
-<img src="https://github.com/kongukjae/KDT-2-Project-C-3/assets/117888227/e07a2b2f-3ed0-45d3-9709-4b2f65f3ee07.png" height="350">
-
-### Additional Features
-<img src="https://user-images.githubusercontent.com/117888227/236104335-5118876f-c60d-407c-acbd-7657f633a570.png" height="350">
-<img src="https://user-images.githubusercontent.com/117888227/236104339-03391004-cba5-4298-9ecd-2bcac74ffb04.png" height="350">
-
-</div>
 
 ---
 
